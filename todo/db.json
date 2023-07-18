@@ -1,19 +1,18 @@
 {
   "todoList": [
     {
-      "title": "Eat lunch",
-      "id": 2,
-      "isComplete": true
+      "title": "create react app",
+      "priority": "High",
+      "isComplete": false,
+      "creationDate": "2023-07-18T07:28:02.414Z",
+      "id": 1
     },
     {
-      "title": "Create app",
-      "id": 3,
-      "isComplete": false
-    },
-    {
-      "title": "new item",
-      "id": 4,
-      "isComplete": false
+      "title": "asdfvrb",
+      "priority": "Medium",
+      "isComplete": false,
+      "creationDate": "2023-07-18T07:30:08.333Z",
+      "id": 2
     }
   ]
 }

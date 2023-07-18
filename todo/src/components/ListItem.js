@@ -1,16 +1,15 @@
-import { RiDeleteBin5Line, RiEdit2Line, RiSave3Line } from "react-icons/ri";
+import { RiDeleteBin5Line, RiEdit2Line } from "react-icons/ri";
 import { MdDownloadDone } from "react-icons/md";
 import useTodoListContext from "../hooks/use-todolist-context";
 import { useState } from "react";
+import Priority from "./Priority";
 
 function ListItem({ item }) {
   const { editTodoItem, deleteTodoItem, editTodoItemStatus } =
     useTodoListContext();
   const [showPanel, setShowPane] = useState(false);
   const [newTitle, setNewTitle] = useState("");
-  const [errorMessage, setErrorMessage] = useState(
-    "Note : Please enter valid title"
-  );
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (event) => {
     setNewTitle(event.target.value);
@@ -75,8 +74,9 @@ function ListItem({ item }) {
           checked={item.isComplete}
           onChange={handleCheckboxChange}
         />
-        {item.title}
-        <div className="w-10 flex flex-row justify-between">
+        <div>{item.title}</div>
+        <div className="w-20 flex flex-row justify-around">
+          <Priority level={item.priority} />
           <RiDeleteBin5Line onClick={handleDeleteClick} />
           {!item.isComplete && <RiEdit2Line onClick={handleEditClick} />}
         </div>

@@ -11,9 +11,12 @@ function TodoListProvider({ children }) {
     setTodoList(response.data);
   }, []);
 
-  const addTodoItem = async (title) => {
+  const addTodoItem = async (title, priority) => {
     const response = await axios.post("http://localhost:3001/todoList", {
       title,
+      priority,
+      isComplete: false,
+      creationDate: new Date(),
     });
 
     const updatedTodoList = [...todoList, response.data];
