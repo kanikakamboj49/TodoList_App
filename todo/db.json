@@ -1,9 +1,19 @@
 {
-    "todoList":[
-        {
-            "title":"Create react app",
-            "id": 1,
-            "status": "in-complete"
-        }
-    ]
+  "todoList": [
+    {
+      "title": "Eat lunch",
+      "id": 2,
+      "isComplete": true
+    },
+    {
+      "title": "Create app",
+      "id": 3,
+      "isComplete": false
+    },
+    {
+      "title": "new item",
+      "id": 4,
+      "isComplete": false
+    }
+  ]
 }
