@@ -15,7 +15,6 @@ function AddItem() {
     if (title !== "" && priority !== "") {
       addTodoItem(title, priority);
       setTitle("");
-      setPriority("");
       setErrorMessage("");
     } else if (title === "") {
       setErrorMessage("Please enter valid title");
@@ -55,36 +54,36 @@ function AddItem() {
         <div>
           <input
             type="radio"
-            className="accent-indigo-400"
+            className="accent-indigo-400 w-2"
             id="high"
             name="priority"
             value="High"
           />
-          <label for="high" className="text-xs text-slate-500">
+          <label htmlFor="high" className="text-xs text-slate-500 ml-1">
             High
           </label>
         </div>
         <div>
           <input
             type="radio"
-            className="accent-indigo-400"
+            className="accent-indigo-400 w-2"
             id="medium"
             name="priority"
             value="Medium"
           />
-          <label for="medium" className="text-xs text-slate-500">
+          <label htmlFor="medium" className="text-xs text-slate-500 ml-1">
             Medium
           </label>
         </div>
         <div>
           <input
             type="radio"
-            className="accent-indigo-400"
+            className="accent-indigo-400 w-2"
             id="low"
             name="priority"
             value="Low"
           />
-          <label for="low" className="text-xs text-slate-500">
+          <label htmlFor="low" className="text-xs text-slate-500 ml-1">
             Low
           </label>
         </div>

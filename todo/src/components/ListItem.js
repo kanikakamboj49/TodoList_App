@@ -75,7 +75,7 @@ function ListItem({ item }) {
           onChange={handleCheckboxChange}
         />
         <div>{item.title}</div>
-        <div className="w-20 flex flex-row justify-around">
+        <div className="w-20 flex flex-row justify-around items-center">
           <Priority level={item.priority} />
           <RiDeleteBin5Line onClick={handleDeleteClick} />
           {!item.isComplete && <RiEdit2Line onClick={handleEditClick} />}

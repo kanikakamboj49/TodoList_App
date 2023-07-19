@@ -21,3 +21,5 @@
 10. Sorting todos : Allow users to sort todos based on different criteria, such as creation date or completion status.
 
 11. Priority levels : Implement a feature that allows users to assign priority levels to todos, such as high, medium, or low.
+
+12. Searching todos : User can search for the todo list items
