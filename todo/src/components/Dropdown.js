@@ -2,13 +2,12 @@ import DropdownItem from "./DropdownItem";
 
 function Dropdown({ items }) {
   const dropdownItems = (
-    <div className="absolute bg-yellow-500 w-20 rounded">
+    <div className="absolute">
       <ul>
         {items.map((item, index) => {
           return (
-            <li>
+            <li key={index}>
               <DropdownItem
-                key={index}
                 name={item.name}
                 handleItemClick={item.handleClick}
               />

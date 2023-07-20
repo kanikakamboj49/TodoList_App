@@ -19,7 +19,7 @@ function TodoListProvider({ children }) {
       creationDate: new Date(),
     });
 
-    const updatedTodoList = [...todoList, response.data];
+    const updatedTodoList = [response.data, ...todoList];
     setTodoList(updatedTodoList);
   };
 

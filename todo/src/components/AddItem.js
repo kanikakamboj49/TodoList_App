@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useTodoListContext from "../hooks/use-todolist-context";
+import { GrFormAdd } from "react-icons/gr";
 
 function AddItem() {
   const [title, setTitle] = useState("");
@@ -32,7 +33,7 @@ function AddItem() {
   );
 
   return (
-    <div className="w-80 p-3 bg-slate-50 mb-1">
+    <div className="w-80 p-3 bg-slate-50 mb-3">
       <div className={"flex justify-around  rounded"}>
         <input
           type="text"
@@ -42,10 +43,10 @@ function AddItem() {
           onChange={handleChange}
         ></input>
         <button
-          className="bg-indigo-400 w-8 rounded-[50px] font-black"
+          className="flex justify-center items-center bg-gradient-to-r from-indigo-600 to-indigo-400 ... w-8 rounded-[50px] font-black"
           onClick={handleClick}
         >
-          +
+          <GrFormAdd />
         </button>
       </div>
 
@@ -54,36 +55,45 @@ function AddItem() {
         <div>
           <input
             type="radio"
-            className="accent-indigo-400 w-2"
+            className="accent-indigo-400 w-2 cursor-pointer"
             id="high"
             name="priority"
             value="High"
           />
-          <label htmlFor="high" className="text-xs text-slate-500 ml-1">
+          <label
+            htmlFor="high"
+            className="cursor-pointer text-xs text-slate-500 ml-1"
+          >
             High
           </label>
         </div>
         <div>
           <input
             type="radio"
-            className="accent-indigo-400 w-2"
+            className="accent-indigo-400 w-2 cursor-pointer"
             id="medium"
             name="priority"
             value="Medium"
           />
-          <label htmlFor="medium" className="text-xs text-slate-500 ml-1">
+          <label
+            htmlFor="medium"
+            className="cursor-pointer text-xs text-slate-500 ml-1"
+          >
             Medium
           </label>
         </div>
         <div>
           <input
             type="radio"
-            className="accent-indigo-400 w-2"
+            className="accent-indigo-400 w-2 cursor-pointer"
             id="low"
             name="priority"
             value="Low"
           />
-          <label htmlFor="low" className="text-xs text-slate-500 ml-1">
+          <label
+            htmlFor="low"
+            className="cursor-pointer text-xs text-slate-500 ml-1"
+          >
             Low
           </label>
         </div>

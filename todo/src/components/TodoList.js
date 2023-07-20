@@ -1,46 +1,116 @@
 import ListItem from "./ListItem";
 import useTodoListContext from "../hooks/use-todolist-context";
 import AddItem from "./AddItem";
-import { MdFilterList } from "react-icons/md";
+import { MdFilterList, MdOutlineSearch } from "react-icons/md";
+import { GrFormAdd } from "react-icons/gr";
 import { BiSortAlt2 } from "react-icons/bi";
-import { useState } from "react";
-import Dropdown from "./Dropdown";
+import { useEffect, useState } from "react";
+import SearchItem from "./SearchItem";
+import Button from "./Button";
+import DropdownButton from "./DropdownButton";
+import Header from "./Header";
 
 function TodoList() {
   const { todoList } = useTodoListContext();
+  const [todoItems, setTodoItems] = useState([]);
+  const [additem, setAddItem] = useState(false);
+  const [searchitem, setSearchItem] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const [showSort, setShowSort] = useState(false);
 
-  const handleSortClick = () => {
-    if (showFilter === true) {
-      setShowFilter(false);
+  useEffect(() => {
+    setTodoItems(todoList);
+  }, [todoList]);
+
+  const handleAddItemClick = () => {
+    if (searchitem === true) {
+      setSearchItem(false);
     }
-    setShowSort(!showSort);
+    setAddItem(!additem);
   };
 
-  const handleFilterClick = () => {
-    if (showSort === true) {
-      setShowSort(false);
+  const handleSearchItemClick = () => {
+    if (additem === true) {
+      setAddItem(false);
     }
-    setShowFilter(!showFilter);
+    setSearchItem(!searchitem);
   };
 
-  const items = [
+  const handleSearch = (title) => {
+    console.log(title);
+    if (title === "") {
+      setTodoItems(todoList);
+    } else {
+      const updatedItems = todoList.filter((item) => {
+        return item.title.includes(title);
+      });
+      setTodoItems(updatedItems);
+    }
+  };
+
+  const handleSortEnter = () => {
+    setShowSort(true);
+  };
+
+  const handleSortLeave = () => {
+    setShowSort(false);
+  };
+
+  const handleFilterEnter = () => {
+    setShowFilter(true);
+  };
+
+  const handleFilterLeave = () => {
+    setShowFilter(false);
+  };
+
+  const sortTodoList = (name) => {
+    console.log(`Sort for ${name}`);
+  };
+
+  const filtertodoList = (criteria) => {
+    console.log(`Filtering for ${criteria}`);
+    if (criteria !== "All") {
+      const updatedItems = todoList.filter((item) => {
+        return item.priority === criteria;
+      });
+      setTodoItems(updatedItems);
+    } else {
+      setTodoItems(todoList);
+    }
+  };
+
+  const sortItems = [
     {
-      name: "Item 1",
-      handleClick: () => console.log(`This item is Item 1`),
+      name: "Creation Date",
+      handleClick: () => sortTodoList("Creation Date"),
     },
     {
-      name: "Item 2",
-      handleClick: () => console.log(`This item is Item 2 `),
-    },
-    {
-      name: "Item 3",
-      handleClick: () => console.log(`This item is Item 3`),
+      name: "Completion Status",
+      handleClick: () => sortTodoList("Completion Status"),
     },
   ];
 
-  const renderedList = todoList.map((item) => {
+  const filterItems = [
+    {
+      name: "High Priority",
+      handleClick: () => filtertodoList("High"),
+    },
+    {
+      name: "Medium Priority",
+      handleClick: () => filtertodoList("Medium"),
+    },
+    {
+      name: "Low Priority",
+      handleClick: () => filtertodoList("Low"),
+    },
+    {
+      name: "All",
+      handleClick: () => filtertodoList("All"),
+    },
+  ];
+
+  const renderedList = todoItems.map((item) => {
     return (
       <div key={item.id}>
         <ListItem item={item} />
@@ -50,22 +120,47 @@ function TodoList() {
 
   return (
     <div className="flex flex-col items-center m-5 w-4/4">
-      <div className="flex justify-around bg-gradient-to-r from-indigo-600 to-indigo-400 ... w-80 h-10 text-center font-black text-xl rounded-tl rounded-tr">
-        <div className="flex flex-col justify-center">
-          <button onClick={handleSortClick}>
-            <BiSortAlt2 />
-          </button>
-          {showSort && <Dropdown items={items} />}
-        </div>
+      <Header className="bg-gradient-to-r from-indigo-600 to-indigo-400 ... w-80 font-black text-xl rounded-tl rounded-tr">
+        <Button
+          className=" bg-gradient-to-r from-indigo-700 to-indigo-500 ... w-7 rounded-full"
+          onClick={handleAddItemClick}
+        >
+          <GrFormAdd />
+        </Button>
         My Todo List
-        <div className="flex flex-col justify-center">
-          <button onClick={handleFilterClick}>
-            <MdFilterList />
-          </button>
-          {showFilter && <Dropdown items={items} />}
-        </div>
+        <Button
+          className="bg-gradient-to-r from-indigo-500 to-indigo-700 ... w-7 rounded-full"
+          onClick={handleSearchItemClick}
+        >
+          <MdOutlineSearch />
+        </Button>
+      </Header>
+
+      <div>
+        {additem && <AddItem />}
+        {searchitem && <SearchItem onTitleChange={handleSearch} />}
       </div>
-      <AddItem />
+
+      <div className="flex w-80 p-1 bg-slate-50 mb-1 justify-around">
+        <DropdownButton
+          className="bg-gradient-to-r from-slate-300 to-slate-200 ... w-4/5 p-1 rounded"
+          items={sortItems}
+          showmenu={showSort.toString()}
+          onMouseEnter={handleSortEnter}
+          onMouseLeave={handleSortLeave}
+        >
+          <BiSortAlt2 />
+        </DropdownButton>
+        <DropdownButton
+          className="bg-gradient-to-r from-slate-300 to-slate-200 ... w-4/5 p-1 rounded"
+          items={filterItems}
+          showmenu={showFilter.toString()}
+          onMouseEnter={handleFilterEnter}
+          onMouseLeave={handleFilterLeave}
+        >
+          <MdFilterList />
+        </DropdownButton>
+      </div>
       <div className="w-80">{renderedList}</div>
     </div>
   );

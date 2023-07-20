@@ -70,15 +70,20 @@ function ListItem({ item }) {
         <input
           value={item}
           type="checkbox"
-          className="accent-indigo-400"
+          className="accent-indigo-400 cursor-pointer"
           checked={item.isComplete}
           onChange={handleCheckboxChange}
         />
         <div>{item.title}</div>
         <div className="w-20 flex flex-row justify-around items-center">
           <Priority level={item.priority} />
-          <RiDeleteBin5Line onClick={handleDeleteClick} />
-          {!item.isComplete && <RiEdit2Line onClick={handleEditClick} />}
+          <RiDeleteBin5Line
+            onClick={handleDeleteClick}
+            className="cursor-pointer"
+          />
+          {!item.isComplete && (
+            <RiEdit2Line onClick={handleEditClick} className="cursor-pointer" />
+          )}
         </div>
       </div>
       {showPanel && editPanel}
