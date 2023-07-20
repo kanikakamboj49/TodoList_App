@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function SearchItem({ onTitleChange }) {
   const [title, setTitle] = useState("");
 
+  useEffect(() => {
+    const intervalId = setTimeout(() => {
+      onTitleChange(title);
+    }, 400);
+
+    return () => {
+      clearTimeout(intervalId);
+    };
+  }, [title]);
+
   const handleChange = (event) => {
     setTitle(event.target.value);
-    onTitleChange(event.target.value);
   };
 
   return (
