@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useTodoListContext from "../hooks/use-todolist-context";
+import Button from "./Button";
 import { GrFormAdd } from "react-icons/gr";
 
 function AddItem() {
@@ -42,12 +43,12 @@ function AddItem() {
           value={title}
           onChange={handleChange}
         ></input>
-        <button
-          className="flex justify-center items-center bg-gradient-to-r from-indigo-600 to-indigo-400 ... w-8 rounded-[50px] font-black"
+        <Button
+          className="bg-gradient-to-r from-indigo-600 to-indigo-400 ... w-8 h-5 rounded-full"
           onClick={handleClick}
         >
           <GrFormAdd />
-        </button>
+        </Button>
       </div>
 
       <div className="mt-2 text-md ml-1">Priority</div>

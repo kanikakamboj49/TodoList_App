@@ -3,6 +3,7 @@ import { MdDownloadDone } from "react-icons/md";
 import useTodoListContext from "../hooks/use-todolist-context";
 import { useState } from "react";
 import Priority from "./Priority";
+import Button from "./Button";
 
 function ListItem({ item }) {
   const { editTodoItem, deleteTodoItem, editTodoItemStatus } =
@@ -51,12 +52,12 @@ function ListItem({ item }) {
           onChange={handleChange}
           placeholder="New Title..."
         ></input>
-        <button
-          className="flex justify-center w-5 h-4 bg-gradient-to-r from-slate-400 to-slate-300 ..."
+        <Button
+          className="w-5 h-4 border-2 border-slate-300 bg-gradient-to-r from-slate-400 to-slate-300 ... rounded"
           onClick={handleSaveClick}
         >
           <MdDownloadDone />
-        </button>
+        </Button>
       </div>
       {errorMessage !== "" && errorMessagePanel}
     </div>

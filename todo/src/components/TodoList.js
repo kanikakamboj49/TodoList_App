@@ -64,12 +64,23 @@ function TodoList() {
     setShowFilter(false);
   };
 
-  const sortTodoList = (name) => {
-    console.log(`Sort for ${name}`);
+  const sortTodoList = (item) => {
+    if (item.criteria === "Creation Date" && item.order === "Desc") {
+      const updatedItems = todoItems.sort(
+        (item1, item2) =>
+          new Date(item2.creationDate) - new Date(item1.creationDate)
+      );
+      setTodoItems(updatedItems);
+    } else if (item.criteria === "Creation Date" && item.order === "Asc") {
+      const updatedItems = todoItems.sort(
+        (item1, item2) =>
+          new Date(item1.creationDate) - new Date(item2.creationDate)
+      );
+      setTodoItems(updatedItems);
+    }
   };
 
   const filtertodoList = (criteria) => {
-    console.log(`Filtering for ${criteria}`);
     if (criteria !== "All") {
       const updatedItems = todoList.filter((item) => {
         return item.priority === criteria;
@@ -82,12 +93,14 @@ function TodoList() {
 
   const sortItems = [
     {
-      name: "Creation Date",
-      handleClick: () => sortTodoList("Creation Date"),
+      name: "Creation Date (Asc)",
+      handleClick: () =>
+        sortTodoList({ criteria: "Creation Date", order: "Asc" }),
     },
     {
-      name: "Completion Status",
-      handleClick: () => sortTodoList("Completion Status"),
+      name: "Creation Date (Desc)",
+      handleClick: () =>
+        sortTodoList({ criteria: "Creation Date", order: "Desc" }),
     },
   ];
 
