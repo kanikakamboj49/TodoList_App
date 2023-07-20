@@ -65,18 +65,39 @@ function TodoList() {
   };
 
   const sortTodoList = (item) => {
-    if (item.criteria === "Creation Date" && item.order === "Desc") {
-      const updatedItems = todoItems.sort(
-        (item1, item2) =>
-          new Date(item2.creationDate) - new Date(item1.creationDate)
-      );
-      setTodoItems(updatedItems);
-    } else if (item.criteria === "Creation Date" && item.order === "Asc") {
-      const updatedItems = todoItems.sort(
-        (item1, item2) =>
-          new Date(item1.creationDate) - new Date(item2.creationDate)
-      );
-      setTodoItems(updatedItems);
+    if (item.criteria === "Creation Date") {
+      if (item.order === "Desc") {
+        const updatedItems = todoItems.sort(
+          (item1, item2) =>
+            new Date(item2.creationDate) - new Date(item1.creationDate)
+        );
+        setTodoItems(updatedItems);
+      } else if (item.order === "Asc") {
+        const updatedItems = todoItems.sort(
+          (item1, item2) =>
+            new Date(item1.creationDate) - new Date(item2.creationDate)
+        );
+        setTodoItems(updatedItems);
+      }
+    } else if (item.criteria === "Status") {
+      const completeItems = todoItems.filter((item) => {
+        return item.isComplete === true;
+      });
+      const incompleteItems = todoItems.filter((item) => {
+        return item.isComplete === false;
+      });
+
+      if (item.order === "Complete") {
+        console.log("complete items");
+        const updatedItems = [...completeItems, ...incompleteItems];
+        setTodoItems(updatedItems);
+        console.log(todoItems);
+      } else if (item.order === "Incomplete") {
+        console.log("incomplete items");
+        const updatedItems = [...incompleteItems, ...completeItems];
+        setTodoItems(updatedItems);
+        console.log(todoItems);
+      }
     }
   };
 
@@ -101,6 +122,16 @@ function TodoList() {
       name: "Creation Date (Desc)",
       handleClick: () =>
         sortTodoList({ criteria: "Creation Date", order: "Desc" }),
+    },
+    {
+      name: "Complete First",
+      handleClick: () =>
+        sortTodoList({ criteria: "Status", order: "Complete" }),
+    },
+    {
+      name: "In-complete First",
+      handleClick: () =>
+        sortTodoList({ criteria: "Status", order: "Incomplete" }),
     },
   ];
 
