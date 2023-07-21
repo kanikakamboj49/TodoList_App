@@ -22,7 +22,7 @@ function SearchItem({ onTitleChange }) {
       <div className={"flex justify-around  rounded"}>
         <input
           type="text"
-          className="w-60 rounded"
+          className="w-60 border border-gray-300 rounded"
           placeholder="New Item..."
           value={title}
           onChange={handleChange}
