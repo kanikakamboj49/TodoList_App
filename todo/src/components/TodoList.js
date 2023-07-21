@@ -1,156 +1,102 @@
 import ListItem from "./ListItem";
-import useTodoListContext from "../hooks/use-todolist-context";
 import AddItem from "./AddItem";
 import { MdFilterList, MdOutlineSearch } from "react-icons/md";
 import { GrFormAdd } from "react-icons/gr";
 import { BiSortAlt2 } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SearchItem from "./SearchItem";
 import Button from "./Button";
 import DropdownButton from "./DropdownButton";
 import Header from "./Header";
+import useAddSearch from "../hooks/use-add-search";
+import useFilterSort from "../hooks/use-filter-sort";
+import useTodoItems from "../hooks/use-todoitems";
 
 function TodoList() {
-  const { todoList } = useTodoListContext();
-  const [todoItems, setTodoItems] = useState([]);
-  const [additem, setAddItem] = useState(false);
-  const [searchitem, setSearchItem] = useState(false);
-  const [showFilter, setShowFilter] = useState(false);
-  const [showSort, setShowSort] = useState(false);
+  const { additem, searchitem, handleAddItemClick, handleSearchItemClick } =
+    useAddSearch();
+  const {
+    showFilter,
+    showSort,
+    setShowFilter,
+    setShowSort,
+    handleFilterEnter,
+    handleFilterLeave,
+    handleSortEnter,
+    handleSortLeave,
+  } = useFilterSort();
+  const {
+    todoList,
+    todoItems,
+    setTodoItems,
+    sortTodoList,
+    filtertodoList,
+    handleSearch,
+  } = useTodoItems();
 
   useEffect(() => {
     setTodoItems(todoList);
   }, [todoList]);
 
-  const handleAddItemClick = () => {
-    if (searchitem === true) {
-      setSearchItem(false);
-    }
-    setAddItem(!additem);
-  };
-
-  const handleSearchItemClick = () => {
-    if (additem === true) {
-      setAddItem(false);
-    }
-    setSearchItem(!searchitem);
-  };
-
-  const handleSearch = (title) => {
-    console.log(title);
-    if (title === "") {
-      setTodoItems(todoList);
-    } else {
-      const updatedItems = todoList.filter((item) => {
-        return item.title.includes(title);
-      });
-      setTodoItems(updatedItems);
-    }
-  };
-
-  const handleSortEnter = () => {
-    setShowSort(true);
-  };
-
-  const handleSortLeave = () => {
-    setShowSort(false);
-  };
-
-  const handleFilterEnter = () => {
-    setShowFilter(true);
-  };
-
-  const handleFilterLeave = () => {
-    setShowFilter(false);
-  };
-
-  const sortTodoList = (item) => {
-    if (item.criteria === "Creation Date") {
-      if (item.order === "Desc") {
-        const updatedItems = todoItems.sort(
-          (item1, item2) =>
-            new Date(item2.creationDate) - new Date(item1.creationDate)
-        );
-        setTodoItems(updatedItems);
-      } else if (item.order === "Asc") {
-        const updatedItems = todoItems.sort(
-          (item1, item2) =>
-            new Date(item1.creationDate) - new Date(item2.creationDate)
-        );
-        setTodoItems(updatedItems);
-      }
-    } else if (item.criteria === "Status") {
-      const completeItems = todoItems.filter((item) => {
-        return item.isComplete === true;
-      });
-      const incompleteItems = todoItems.filter((item) => {
-        return item.isComplete === false;
-      });
-
-      if (item.order === "Complete") {
-        console.log("complete items");
-        const updatedItems = [...completeItems, ...incompleteItems];
-        setTodoItems(updatedItems);
-        console.log(todoItems);
-      } else if (item.order === "Incomplete") {
-        console.log("incomplete items");
-        const updatedItems = [...incompleteItems, ...completeItems];
-        setTodoItems(updatedItems);
-        console.log(todoItems);
-      }
-    }
-  };
-
-  const filtertodoList = (criteria) => {
-    if (criteria !== "All") {
-      const updatedItems = todoList.filter((item) => {
-        return item.priority === criteria;
-      });
-      setTodoItems(updatedItems);
-    } else {
-      setTodoItems(todoList);
-    }
-  };
-
   const sortItems = [
     {
       name: "Creation Date (Asc)",
-      handleClick: () =>
-        sortTodoList({ criteria: "Creation Date", order: "Asc" }),
+      handleClick: () => {
+        sortTodoList({ criteria: "Creation Date", order: "Asc" });
+        setShowSort(false);
+      },
     },
     {
       name: "Creation Date (Desc)",
-      handleClick: () =>
-        sortTodoList({ criteria: "Creation Date", order: "Desc" }),
+      handleClick: () => {
+        sortTodoList({ criteria: "Creation Date", order: "Desc" });
+        setShowSort(false);
+      },
     },
     {
       name: "Complete First",
-      handleClick: () =>
-        sortTodoList({ criteria: "Status", order: "Complete" }),
+      handleClick: () => {
+        sortTodoList({ criteria: "Status", order: "Complete" });
+        setShowSort(false);
+      },
     },
     {
       name: "In-complete First",
-      handleClick: () =>
-        sortTodoList({ criteria: "Status", order: "Incomplete" }),
+      handleClick: () => {
+        sortTodoList({ criteria: "Status", order: "Incomplete" });
+        setShowSort(false);
+      },
     },
   ];
 
   const filterItems = [
     {
       name: "High Priority",
-      handleClick: () => filtertodoList("High"),
+      handleClick: () => {
+        filtertodoList("High");
+        setShowFilter(false);
+      },
     },
     {
       name: "Medium Priority",
-      handleClick: () => filtertodoList("Medium"),
+      handleClick: () => {
+        filtertodoList("Medium");
+        setShowFilter(false);
+      },
     },
     {
       name: "Low Priority",
-      handleClick: () => filtertodoList("Low"),
+      handleClick: () => {
+        filtertodoList("Low");
+        setShowFilter(false);
+      },
     },
     {
       name: "All",
-      handleClick: () => filtertodoList("All"),
+      handleClick: () => {
+        filtertodoList("All");
+        setShowFilter(false);
+      },
     },
   ];
 
